@@ -1,0 +1,19 @@
+start-yarn.cmd
+start-dfs.cmd
+-----------------------------
+hdfs dfs -put C:\Users\49176\Desktop\WebYarn\log-analysis-csv\web_logs.csv /logs/
+hdfs dfs -rm -r /user/Mohamad/output/ip-pages
+set HADOOP_CONF_DIR=C:\hadoop\etc\hadoop
+----------------------------
+spark-submit --class org.example.IPVisitedPagesCSV ^
+  --master yarn ^
+  --deploy-mode cluster ^
+  target/log-analysis-csv-1.0.jar ^
+  hdfs://localhost:9000/logs/web_logs.csv ^
+  hdfs://localhost:9000/user/Mohamad/output/ip-pages
+----------------------------------------------------
+hdfs dfs -cat /user/Mohamad/output/ip-pages/part-00000-*.json
+hdfs dfs -get /user/Mohamad/output/ip-pages/part-00000-*.json C:\Users\49176\Desktop\
+
+hdfs dfs -cat /logs/web_logs.csv | more
+

@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spark-ip-visited-pages
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: spark
+          image: alhajim/log-analysis-csv:latest
+          imagePullPolicy: Never
+          command: ["/opt/bitnami/spark/bin/spark-submit"]
+          args:
+            - "--master"
+            - "local"
+            - "--class"
+            - "org.example.IPVisitedPagesCSV"
+            - "--conf"
+            - "spark.hadoop.fs.s3a.endpoint=http://minio-service:9000"
+            - "--conf"
+            - "spark.hadoop.fs.s3a.access.key=admin"
+            - "--conf"
+            - "spark.hadoop.fs.s3a.secret.key=password"
+            - "--conf"
+            - "spark.hadoop.fs.s3a.path.style.access=true"
+            - "--conf"
+            - "spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem"
+            - "--conf"
+            - "spark.hadoop.fs.s3a.connection.ssl.enabled=false"
+            - "/opt/bitnami/spark/log-analysis.jar"
+            - "s3a://logs/web_logs.csv"
+            - "s3a://logs/output/ip-pages"

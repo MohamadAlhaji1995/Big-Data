@@ -1,0 +1,19 @@
+hdfs dfs -rm /input/customers.json
+hdfs dfs -rm /input/orders.json
+hdfs dfs -rm /input/products.json
+hdfs dfs -rm -r /user/Mohamad/output
+
+hdfs dfs -put "C:\Users\49176\Desktop\jsonYarn\customers.json" /input/
+hdfs dfs -put "C:\Users\49176\Desktop\jsonYarn\orders.json" /input/
+hdfs dfs -put "C:\Users\49176\Desktop\jsonYarn\products.json" /input/
+
+
+hdfs dfs -rm /Mohamad/output
+
+
+spark-submit --class org.example.App --master local[*] target/json-join-spark-1.0-jar-with-dependencies.jar
+
+
+
+hdfs dfs -cat /user/Mohamad/output/result/part-*.json
+

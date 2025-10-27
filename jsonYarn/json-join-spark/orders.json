@@ -1,0 +1,5 @@
+{ "order_id": 100, "customer_id": 1, "total": 59.99 }
+{ "order_id": 101, "customer_id": 2, "total": 29.99 }
+{ "order_id": 102, "customer_id": 3, "total": 29.99 }
+{ "order_id": 103, "customer_id": 3, "total": 89.99 }
+

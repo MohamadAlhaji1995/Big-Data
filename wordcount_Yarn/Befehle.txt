@@ -1,0 +1,32 @@
+cmd als admin und dann
+start-dfs.cmd
+start-yarn.cmd
+hdfs dfs -rm -r /user/Mohamad/input
+hdfs dfs -mkdir -p /user/Mohamad/input
+hdfs dfs -put C:\Users\49176\Desktop\input.txt /user/Mohamad/input/
+hdfs dfs -rm -r /user/Mohamad/output
+hdfs dfs -ls /user/Mohamad/input/
+hdfs dfs -cat /user/Mohamad/input/input.txt
+
+set HADOOP_CONF_DIR=C:\Users\49176\hadoop\etc\hadoop
+
+
+spark-submit ^
+  --class org.example.WordCount ^
+  --master yarn ^
+  --deploy-mode client ^
+  --conf "spark.driver.extraJavaOptions=-Djava.io.tmpdir=C:/Users/49176/hadoop-tmp/tmp" ^
+  --conf "spark.executor.extraJavaOptions=-Djava.io.tmpdir=C:/Users/49176/hadoop-tmp/tmp" ^
+  --conf "spark.yarn.allowSymlink=false" ^
+  file:///C:/Users/49176/Desktop/wordcountYarn/target/wordcount-1.0.jar ^
+  /user/Mohamad/input/input.txt ^
+  /user/Mohamad/output
+
+
+
+hdfs dfs -cat /user/Mohamad/output/part-* > C:\Users\49176\Desktop\wordcount_output.txt
+
+hdfs dfsadmin -safemode leave
+
+--------------------------------------------------------------------------------
+
